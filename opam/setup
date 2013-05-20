@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# bin/compile <build-dir> <cache-dir>
+
+set -e
+set -o pipefail
+
+url=http://codefirst.org/mzp/ocaml-4.00.tgz
+
+BUILD_DIR=$1
+CACHE_DIR=$2
+
+function indent() {
+  c='s/^/       /'
+  case $(uname) in
+    Darwin) sed -l "$c";;
+    *)      sed -u "$c";;
+  esac
+}
+
+cd $BUILD_DIR
+
+dir=/tmp/ocaml
+rm -fr $dir
+mkdir -p $dir
+
+echo "-----> Fetching OCaml binaries"
+curl  $url -s -o - | tar xzf - -C $dir
+
+echo "-----> Prepending $dir/bin to PATH"
+echo 'export PATH="$dir/bin:$PATH"'
