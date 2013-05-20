@@ -1,0 +1,33 @@
+Heroku buildpack for OCaml recipe
+=================================
+
+If you want to use OCaml on Heroku, please use https://github.com/mzp/heroku-buildpack-ocaml.
+This repository is for a scripts to build bulidpack.
+
+Target
+------------
+
+ * OCaml 4.00.1
+ * OPAM 1.00
+ * ocamlnet(via opam)
+
+Prerequires
+-----------
+
+To build files on heroku, we need vulcan:
+
+    $ gem install vulcan
+
+Usage
+-----------
+
+    $ cd ocaml
+    $ ./build.sh
+
+and result files are downloaded as `/tmp/ocaml.tgz`.
+
+
+See also
+-----------
+
+ * https://github.com/mzp/heroku-buildpack-ocaml
