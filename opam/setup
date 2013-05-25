@@ -4,7 +4,7 @@
 set -e
 set -o pipefail
 
-url=http://codefirst.org/mzp/ocaml-4.00.tgz
+url=http://codefirst.org/mzp/eliom/ocaml-4.00.tgz
 
 BUILD_DIR=$1
 CACHE_DIR=$2

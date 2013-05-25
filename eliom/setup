@@ -22,7 +22,6 @@ function setup() {
   dir=$1
   url=$2
 
-  rm -fr $dir
   mkdir -p $dir
   echo "fetching $url"
   curl  $url -s -o - | tar xzf - -C $dir
@@ -32,9 +31,18 @@ cd $BUILD_DIR
 echo "-----> Fetching OCaml binaries"
 setup /app/vendor/ocaml $ocaml_url
 setup /app/vendor/opam  $opam_url
+setup /app/ https://s3-eu-west-1.amazonaws.com/midgard-heroku/pcre.tar.gz
+setup /app/vendor/gdbm http://codefirst.org/mzp/gdbm-1.tgz
 
-export PATH="/app/vendor/ocaml/bin:/app/vendor/opam/bin:$PATH"
+echo "-----> Fetching OPAM binaries"
+export PATH="/app/vendor/pcre/bin:/app/vendor/ocaml/bin:/app/vendor/opam/bin:$PATH"
+ls /app
+ls /app/vendor
+ls /app/vendor/gdbm
+which pcre-config
 mkdir -p /app/vendor/opam-lib
 opam init --root=/app/vendor/opam-lib -y
 source /app/vendor/opam-lib/opam-init/init.sh
-opam install -y ocamlfind ocamlnet
+opam remote add myrepo https://github.com/mzp/opam-repo.git
+export LD_PRELOAD=/app/vendor/pcre/lib/libpcre.so.1
+opam install -v -y eliom
